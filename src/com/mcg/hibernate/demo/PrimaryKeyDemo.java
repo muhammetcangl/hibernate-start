@@ -5,6 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.text.ParseException;
+
 public class PrimaryKeyDemo {
 
     public static void main(String[] args) {
@@ -22,9 +24,9 @@ public class PrimaryKeyDemo {
             // use the session object to save Java object
             System.out.println("Creating new student objects...");
 
-            Student tempStudent1 = new Student("Muhammetcan" , "deneme", "muhammetcangl@gmail.com");
-            Student tempStudent2 = new Student("Nazlican" , "deneme", "nazlican@gmail.com");
-            Student tempStudent3 = new Student("Yarencan" , "deneme", "yarencan@gmail.com");
+            Student tempStudent1 = new Student("Muhammetcan" , "deneme", "muhammetcangl@gmail.com",DateUtils.parseDate("01/01/2000"));
+            Student tempStudent2 = new Student("Nazlican" , "deneme", "nazlican@gmail.com",DateUtils.parseDate("01/01/2000"));
+            Student tempStudent3 = new Student("Yarencan" , "deneme", "yarencan@gmail.com",DateUtils.parseDate("01/01/2000"));
 
             // create a student object
             session.beginTransaction();
@@ -40,6 +42,8 @@ public class PrimaryKeyDemo {
 
             System.out.println("Done!");
 
+        } catch (ParseException e) {
+            e.printStackTrace();
         } finally {
             factory.close();
         }

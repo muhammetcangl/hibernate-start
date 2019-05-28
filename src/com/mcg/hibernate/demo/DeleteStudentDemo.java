@@ -4,12 +4,8 @@ import com.mcg.hibernate.demo.entity.Student;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.engine.jdbc.StreamUtils;
 
-import java.text.ParseException;
-import java.util.Date;
-
-public class CreateStudentDemo {
+public class DeleteStudentDemo {
 
     public static void main(String[] args) {
 
@@ -23,28 +19,29 @@ public class CreateStudentDemo {
         Session session = factory.getCurrentSession();
 
         try {
+            int studentId = 1;
 
-            String theDateOfBirthStr = "31/12/1998";
-            Date theDateOfBirth = DateUtils.parseDate(theDateOfBirthStr);
-
-            // use the session object to save Java object
-            System.out.println("Creating new student object...");
-            Student tempStudent = new Student("Muhammetcan" , "Gül", "muhammetcangl@gmail.com", theDateOfBirth);
+            // find out the student's id: primary key
+            System.out.println("Saved student. Generated id: " + studentId);
 
             // create a student object
             session.beginTransaction();
 
-            // start a transaction
-            System.out.println("Saving the student...");
-            session.save(tempStudent);
+            Student myStudent = session.get(Student.class, studentId);
+
+            // delete the student
+            //System.out.println("Deleting student: " + myStudent);
+            //session.delete(myStudent);
+
+            // delete student id=2
+            System.out.println("Deleting student id=2");
+            session.createQuery("delete from Student where id=2").executeUpdate();
 
             // commit transaction
             session.getTransaction().commit();
 
             System.out.println("Done!");
 
-        } catch (ParseException e) {
-            e.printStackTrace();
         } finally {
             factory.close();
         }

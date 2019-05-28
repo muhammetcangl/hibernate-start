@@ -5,6 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.text.ParseException;
+
 public class ReadStudentDemo {
 
     public static void main(String[] args) {
@@ -22,7 +24,7 @@ public class ReadStudentDemo {
 
             // use the session object to save Java object
             System.out.println("Creating new student object...");
-            Student tempStudent = new Student("Duffy" , "Duck", "duffy@gmail.com");
+            Student tempStudent = new Student("Duffy" , "Duck", "duffy@gmail.com",DateUtils.parseDate("01/08/1999"));
 
             // create a student object
             session.beginTransaction();
@@ -56,6 +58,8 @@ public class ReadStudentDemo {
 
             System.out.println("Done!");
 
+        } catch (ParseException e) {
+            e.printStackTrace();
         } finally {
             factory.close();
         }
